@@ -112,4 +112,19 @@ describe('Board', () => {
         assert.equal(board.getWhosTurn(), Player.O, 'It should be O');
     });
 
+    it('should know when is game over', () => {
+        const board = new Board();
+        board.setPlayerMark(0, 0, Player.X);
+        board.setPlayerMark(0, 1, Player.O);
+        board.setPlayerMark(0, 2, Player.X);
+        board.setPlayerMark(1, 1, Player.O);
+        board.setPlayerMark(2, 1, Player.X);
+        board.setPlayerMark(1, 0, Player.O);
+        board.setPlayerMark(2, 2, Player.O);
+        board.setPlayerMark(1, 2, Player.X);
+        assert.equal(board.isGameOver(), false, 'it\'s not game over yer! We have 1 turn remaining');
+        board.setPlayerMark(2, 0, Player.X);
+        assert.equal(board.isGameOver(), true, 'it\'s  game over already! We have 0 turn remaining');
+    });
+
 });

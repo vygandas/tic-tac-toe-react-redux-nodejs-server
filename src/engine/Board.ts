@@ -42,6 +42,10 @@ class Board extends Judge {
         return this.lastTurnBy !== Player.X || this.lastTurnBy === null
             ? Player.X
             : Player.O;
+    };
+
+    public isGameOver = (): boolean => {
+        return this.getWinner() !== null || this.getFreeTurnsCount() === 0;
     }
 
 }
