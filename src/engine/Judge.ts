@@ -18,7 +18,7 @@ class Judge {
         return null;
     };
 
-    private isHorizontalFilled = () => {
+    private isHorizontalFilled = (): keyof IPlayer | null => {
         let winner = null;
         for (let y = 0; y < this.boardGrid.length; y++) {
             let chain: IGridCell[] = [];
@@ -31,7 +31,7 @@ class Judge {
         return winner;
     };
 
-    private isVerticalFilled = () => {
+    private isVerticalFilled = (): keyof IPlayer | null => {
         let winner = null;
         for (let x = 0; x < this.boardGrid.length; x++) {
             let chain: IGridCell[] = [];
@@ -44,7 +44,7 @@ class Judge {
         return winner;
     };
 
-    private isDiagonalLRFilled = () => {
+    private isDiagonalLRFilled = (): keyof IPlayer | null => {
         let chain: IGridCell[] = [];
         for (let xy = 0; xy < this.boardGrid.length; xy++) {
             chain.push( this.boardGrid[xy][xy] );
@@ -52,7 +52,7 @@ class Judge {
         return getChainWinner(chain, this.boardGrid.length);
     };
 
-    private isDiagonalRLFilled = () => {
+    private isDiagonalRLFilled = (): keyof IPlayer | null => {
         let chain: IGridCell[] = [];
         for (let xy = 0; xy < this.boardGrid.length; xy++) {
             chain.push( this.boardGrid[xy][this.boardGrid.length - 1 - xy] );

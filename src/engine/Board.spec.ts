@@ -90,4 +90,26 @@ describe('Board', () => {
         assert.equal(board.getFreeTurnsCount(), 6, 'It should be 6 if we already taken 3 cells in 3x3 grid');
     });
 
+    it('it should know who\'s turn it is', () => {
+        const board = new Board();
+        assert.equal(board.getWhosTurn(), Player.X, 'It should be X');
+        board.setPlayerMark(2, 0, Player.X);
+        assert.equal(board.getWhosTurn(), Player.O, 'It should be O');
+        board.setPlayerMark(1, 1, Player.O);
+        assert.equal(board.getWhosTurn(), Player.X, 'It should be X');
+        board.setPlayerMark(0, 2, Player.X);
+        assert.equal(board.getWhosTurn(), Player.O, 'It should be O');
+    });
+
+    it('it should know who\'s turn it is and automatically place X and O by turn', () => {
+        const board = new Board();
+        assert.equal(board.getWhosTurn(), Player.X, 'It should be X');
+        board.setMark(2, 0);
+        assert.equal(board.getWhosTurn(), Player.O, 'It should be O');
+        board.setMark(1, 1);
+        assert.equal(board.getWhosTurn(), Player.X, 'It should be X');
+        board.setMark(0, 2);
+        assert.equal(board.getWhosTurn(), Player.O, 'It should be O');
+    });
+
 });
