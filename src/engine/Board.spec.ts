@@ -31,4 +31,55 @@ describe('Board', () => {
         assert.equal(board.getBoardGrid()[1][2], Player.O, 'X:2; Y:1 is marked as O');
     });
 
+    it('X should win on default 3x3 board vertically', () => {
+        const board = new Board();
+        board.setPlayerMark(0, 0, Player.X);
+        board.setPlayerMark(0, 1, Player.X);
+        board.setPlayerMark(0, 2, Player.X);
+        console.log(board.getBoardGrid());
+        assert.equal(board.getWinner(), Player.X, 'X won vertically!');
+    });
+
+    it('X should win on default 3x3 board horizontally', () => {
+        const board = new Board();
+        board.setPlayerMark(0, 0, Player.X);
+        board.setPlayerMark(1, 0, Player.X);
+        board.setPlayerMark(2, 0, Player.X);
+        console.log(board.getBoardGrid());
+        assert.equal(board.getWinner(), Player.X, 'X won horizontally!');
+    });
+
+    it('X should win on default 3x3 board diagonally L->R', () => {
+        const board = new Board();
+        board.setPlayerMark(0, 0, Player.X);
+        board.setPlayerMark(1, 1, Player.X);
+        board.setPlayerMark(2, 2, Player.X);
+        console.log(board.getBoardGrid());
+        assert.equal(board.getWinner(), Player.X, 'X won diagonally L->R!');
+    });
+
+    it('X should win on default 3x3 board diagonally R->L', () => {
+        const board = new Board();
+        board.setPlayerMark(2, 0, Player.X);
+        board.setPlayerMark(1, 1, Player.X);
+        board.setPlayerMark(0, 2, Player.X);
+        console.log(board.getBoardGrid());
+        assert.equal(board.getWinner(), Player.X, 'X won diagonally R->L!');
+    });
+
+    it('should nobody win', () => {
+        const board = new Board();
+        board.setPlayerMark(0, 0, Player.X);
+        board.setPlayerMark(0, 1, Player.O);
+        board.setPlayerMark(0, 2, Player.X);
+        board.setPlayerMark(1, 1, Player.O);
+        board.setPlayerMark(2, 1, Player.X);
+        board.setPlayerMark(1, 0, Player.O);
+        board.setPlayerMark(2, 2, Player.O);
+        board.setPlayerMark(2, 2, Player.O);
+        board.setPlayerMark(1, 2, Player.X);
+        console.log(board.getBoardGrid());
+        assert.equal(board.getWinner(), null, 'it\'s a tie!');
+    });
+
 });

@@ -1,24 +1,27 @@
 import { gridGenerator } from "./Grid";
 import { IPlayer } from "../interfaces/IPlayer";
+import { IGridCell } from "../interfaces/IGridCell";
+import Judge from "./Judge";
 
 
-class Board {
+class Board extends Judge {
 
-    private boardSize;
+    private boardSize: number;
 
-    private boardGrid;
+    protected boardGrid: IGridCell[][];
 
     constructor(size: number = 3) {
+        super();
         this.boardSize = size;
         this.boardGrid = gridGenerator(size);
     }
 
-    public getBoardSize = () => this.boardSize;
+    public getBoardSize = (): number => this.boardSize;
 
-    public getBoardGrid = () => this.boardGrid;
+    public getBoardGrid = (): IGridCell[][] => this.boardGrid;
 
-    public setPlayerMark = (x: number, y: number, player: keyof IPlayer) => {
-        this.boardGrid[y][x] = player;
+    public setPlayerMark = (x: number, y: number, player: keyof IPlayer): void => {
+        this.boardGrid[y][x] = <IGridCell>player;
     }
 
 }
