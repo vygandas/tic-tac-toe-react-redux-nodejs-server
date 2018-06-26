@@ -82,4 +82,12 @@ describe('Board', () => {
         assert.equal(board.getWinner(), null, 'it\'s a tie!');
     });
 
+    it('it should be possible to know how many turns do we have left', () => {
+        const board = new Board();
+        board.setPlayerMark(2, 0, Player.X);
+        board.setPlayerMark(1, 1, Player.X);
+        board.setPlayerMark(0, 2, Player.X);
+        assert.equal(board.getFreeTurnsCount(), 6, 'It should be 6 if we already taken 3 cells in 3x3 grid');
+    });
+
 });

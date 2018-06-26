@@ -16,7 +16,7 @@ class Judge {
         const wDRL = this.isDiagonalRLFilled();
         if (wDRL !== null) return wDRL;
         return null;
-    }
+    };
 
     private isHorizontalFilled = () => {
         let winner = null;
@@ -29,7 +29,7 @@ class Judge {
             if (winner !== null) return winner;
         }
         return winner;
-    }
+    };
 
     private isVerticalFilled = () => {
         let winner = null;
@@ -42,7 +42,7 @@ class Judge {
             if (winner !== null) return winner;
         }
         return winner;
-    }
+    };
 
     private isDiagonalLRFilled = () => {
         let chain: IGridCell[] = [];
@@ -50,7 +50,7 @@ class Judge {
             chain.push( this.boardGrid[xy][xy] );
         }
         return getChainWinner(chain, this.boardGrid.length);
-    }
+    };
 
     private isDiagonalRLFilled = () => {
         let chain: IGridCell[] = [];
@@ -58,7 +58,7 @@ class Judge {
             chain.push( this.boardGrid[xy][this.boardGrid.length - 1 - xy] );
         }
         return getChainWinner(chain, this.boardGrid.length);
-    }
+    };
 
 }
 

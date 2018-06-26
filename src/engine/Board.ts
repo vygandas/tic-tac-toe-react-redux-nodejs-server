@@ -22,7 +22,13 @@ class Board extends Judge {
 
     public setPlayerMark = (x: number, y: number, player: keyof IPlayer): void => {
         this.boardGrid[y][x] = <IGridCell>player;
-    }
+    };
+
+    public getFreeTurnsCount = (): number => {
+        let count: number = 0;
+        this.boardGrid.map((r: IGridCell[]) => { count += r.filter((c: IGridCell) => c === null).length })
+        return count;
+    };
 
 }
 
