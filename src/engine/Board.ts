@@ -6,7 +6,7 @@ import Judge from "./Judge";
 
 class Board extends Judge {
 
-    private boardSize: number;
+    protected boardSize: number;
 
     protected boardGrid: IGridCell[][];
 
