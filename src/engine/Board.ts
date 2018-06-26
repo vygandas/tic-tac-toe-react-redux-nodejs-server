@@ -27,9 +27,13 @@ class Board extends Judge {
         this.lastTurnBy = player;
     };
 
-    public setMark = (x: number, y: number): void => {
-        this.boardGrid[y][x] = <IGridCell>this.getWhosTurn();
-        this.lastTurnBy = this.getWhosTurn();
+    public setMark = (x: number, y: number): boolean => {
+        if (this.boardGrid[y][x] === null) {
+            this.boardGrid[y][x] = <IGridCell>this.getWhosTurn();
+            this.lastTurnBy = this.getWhosTurn();
+            return true;
+        }
+        return false;
     };
 
     public getFreeTurnsCount = (): number => {
