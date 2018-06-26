@@ -26,13 +26,20 @@ class App {
             })
         });
         router.get('/mark', (req, res) => {
-            if (this.gameBoard.setMark(parseInt(req.query.x), parseInt(req.query.y))) {
-                res.json({
-                    message: `Cell used [x:${req.query.x};y:${req.query.y}]. Now it's turn for ${this.gameBoard.getWhosTurn()}`
-                })
+            if (!this.gameBoard.isGameOver()) {
+                if (this.gameBoard.setMark(parseInt(req.query.x), parseInt(req.query.y))) {
+                    res.json({
+                        message: `Cell used [x:${req.query.x};y:${req.query.y}]. Now it's turn for ${this.gameBoard.getWhosTurn()}`
+                    })
+                } else {
+                    res.json({
+                        message: `Cell is occupied [x:${req.query.x};y:${req.query.y}]. Now it's still turn for ${this.gameBoard.getWhosTurn()}`
+                    })
+                }
             } else {
+                const msg = this.gameBoard.getWinner() === null ? 'It\'s a tie :|' : `${this.gameBoard.getWinner()} has won!`;
                 res.json({
-                    message: `Cell is occupied [x:${req.query.x};y:${req.query.y}]. Now it's still turn for ${this.gameBoard.getWhosTurn()}`
+                    message: `GAME OVER! ${msg}`
                 })
             }
 
