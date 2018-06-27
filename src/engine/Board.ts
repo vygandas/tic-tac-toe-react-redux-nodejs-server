@@ -12,6 +12,8 @@ class Board extends Judge {
 
     protected lastTurnBy: keyof IPlayer = null;
 
+    private message: string = 'X starts.';
+
     constructor(size: number = 3) {
         super();
         this.boardSize = size;
@@ -51,6 +53,10 @@ class Board extends Judge {
     public isGameOver = (): boolean => {
         return this.getWinner() !== null || this.getFreeTurnsCount() === 0;
     }
+
+    public setMessage = (message: string): string => { this.message = message; return message; }
+
+    public getMessage = () => this.message;
 
 }
 
