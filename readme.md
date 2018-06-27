@@ -1,6 +1,6 @@
 # Tic-Tac-Toe game server written with Node.js
 
-This app uses TypeScript.
+Game client can be found at https://github.com/vygandas/tic-tac-toe-react-redux-nodejs-client
 
 ### Start
 
