@@ -1,6 +1,7 @@
 import Board from "../engine/Board";
+import {ILogMessage} from "../interfaces/ILogMessage";
 
-export const responseObject = (message: string | number | null, board: Board) => {
+export const responseObject = (message: string | number | null, board: Board, log: ILogMessage[] = []) => {
     const gameOver = board.isGameOver();
     let msg = message;
     if (gameOver) {
@@ -11,6 +12,7 @@ export const responseObject = (message: string | number | null, board: Board) =>
     return {
         message: msg,
         gameOver,
-        grid: board.getBoardGrid()
+        grid: board.getBoardGrid(),
+        log
     };
 };

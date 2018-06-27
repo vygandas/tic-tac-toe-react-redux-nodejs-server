@@ -1,6 +1,7 @@
 import * as express from 'express';
 import Board from "./engine/Board";
 import { responseObject } from "./Response/ResponseObject";
+import { ILogMessage } from "./interfaces/ILogMessage";
 
 class App {
 
@@ -8,7 +9,7 @@ class App {
 
     private gameBoard: Board = null;
 
-    private actionsLog = [];
+    private actionsLog: ILogMessage[] = [];
 
     private gameStarted: boolean = false;
 
@@ -28,32 +29,67 @@ class App {
         });
 
         router.get('/', (req, res) => {
-            const response = !this.gameStarted ? responseObject('Hello Players! Wanna play?', this.gameBoard) : responseObject(this.gameBoard.getMessage(), this.gameBoard);
+            const response = !this.gameStarted
+                ? responseObject('Hello Players! Wanna play?', this.gameBoard, this.actionsLog)
+                : responseObject(this.gameBoard.getMessage(), this.gameBoard, this.actionsLog);
             this.gameBoard.setMessage(response.message.toString());
+            this.addLogMessage(response.message.toString());
             res.json(response);
         });
 
         router.get('/reset', (req, res) => {
             this.gameBoard = new Board();
             this.gameBoard.setMessage('Loading...');
-            res.json(responseObject(`${this.gameBoard.getWhosTurn()} starts the game!`, this.gameBoard));
+            this.clearLogMessages();
+            res.json(
+                responseObject(`${this.gameBoard.getWhosTurn()} starts the game!`, this.gameBoard, this.actionsLog));
         });
 
         router.get('/mark', (req, res) => {
+            this.gameStarted = true;
             if (this.gameBoard.setMark(parseInt(req.query.x), parseInt(req.query.y))) {
-                const response = responseObject(`Cell used [x:${req.query.x};y:${req.query.y}]. Now it's turn for ${this.gameBoard.getWhosTurn()}`, this.gameBoard);
+                const response
+                    = responseObject(`Cell used [x:${req.query.x};y:${req.query.y}]. 
+                        Now it's turn for ${this.gameBoard.getWhosTurn()}`, this.gameBoard, this.actionsLog);
                 this.gameBoard.setMessage(response.message.toString());
+                this.addLogMessage(response.message.toString());
                 res.json(response);
             } else {
-                const response = responseObject(`Cell is occupied [x:${req.query.x};y:${req.query.y}]. Now it's still turn for ${this.gameBoard.getWhosTurn()}`, this.gameBoard);
+                const response
+                    = responseObject(`Cell is occupied [x:${req.query.x};y:${req.query.y}]. 
+                        Now it's still turn for ${this.gameBoard.getWhosTurn()}`, this.gameBoard, this.actionsLog);
                 this.gameBoard.setMessage(response.message.toString());
+                this.addLogMessage(response.message.toString());
                 res.json(response);
             }
         });
 
-        router.get('/state', (req, res) => { res.json(); });
+        router.get('/state', (req, res) => {
+            res.json({
+                message: this.gameBoard.getMessage(),
+                gameOver: this.gameBoard.isGameOver(),
+                grid: this.gameBoard.getBoardGrid(),
+                started: this.gameStarted
+            });
+        });
+
+        router.get('/log', (req, res) => {
+            res.json({
+                log: this.actionsLog
+            });
+        });
 
         this.express.use('/', router);
+    }
+
+    private addLogMessage(message: string) {
+        this.actionsLog.push({
+            message
+        });
+    }
+
+    private clearLogMessages() {
+        this.actionsLog = [];
     }
 
 }
