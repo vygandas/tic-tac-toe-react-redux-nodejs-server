@@ -1,7 +1,7 @@
 {
   "name": "tic-tac-toe-react-redux-nodejs-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "A TIC TAC TOE game server app",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
